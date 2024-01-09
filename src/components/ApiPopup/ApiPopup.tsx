@@ -30,7 +30,7 @@ const ApiPopup = () => {
   // };
 
   const validPasswords: { [key: string]: string } = {
-    'lsn': '',
+    'bhe': '',
     'frank': ''
     // Add more passwords and their corresponding API keys here
   };
