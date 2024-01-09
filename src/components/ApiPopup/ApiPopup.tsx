@@ -19,15 +19,35 @@ const ApiPopup = () => {
   );
   const [error, setError] = useState<string>('');
 
+  // const handleConfirm = () => {
+  //   if (_apiKey.length === 0) {
+  //     setError(t('noApiKeyWarning', { ns: 'api' }) as string);
+  //   } else {
+  //     setError('');
+  //     setApiKey(_apiKey);
+  //     setIsModalOpen(false);
+  //   }
+  // };
+
+  const validPasswords: { [key: string]: string } = {
+    'lsn': '',
+    'frank': ''
+    // Add more passwords and their corresponding API keys here
+  };
+  
+  
   const handleConfirm = () => {
-    if (_apiKey.length === 0) {
-      setError(t('noApiKeyWarning', { ns: 'api' }) as string);
-    } else {
-      setError('');
-      setApiKey(_apiKey);
+    const predefinedApiKey = validPasswords[_apiKey];
+    if (predefinedApiKey) {
+      setApiKey(predefinedApiKey);
       setIsModalOpen(false);
+      setError('Success: API Key set successfully'); // Use setError to show success message
+      setTimeout(() => setError(''), 3000); // Remove the message after 3 seconds
+    } else {
+      setError(t('incorrectPasswordWarning', { ns: 'api' }) as string);
     }
   };
+  
 
   useEffect(() => {
     setFirstVisit(false);
@@ -35,7 +55,7 @@ const ApiPopup = () => {
 
   return isModalOpen ? (
     <PopupModal
-      title='Setup your API key'
+      title='Please input the password to use this app'
       handleConfirm={handleConfirm}
       setIsModalOpen={setIsModalOpen}
       cancelButton={false}
